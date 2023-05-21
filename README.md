@@ -7,4 +7,4 @@
 ### Google Tink Encryption
 ### Session and Cookie
 ### PhpMyAdmin - MySql
-[dd3c405f-154a-4f1f-9e6f-1c3e94f6a5dd.webm](https://github.com/OguzhanKtn/SpringMvcProject/assets/81297977/45ddbbab-899d-4377-970b-0a8b0d785b6f)
+[9ce9e373-9745-4d84-8efa-4c88731132be.webm](https://github.com/OguzhanKtn/SpringMvcProject/assets/81297977/b1ca1a87-0f8b-4a47-9f4a-54f6c4a22a64)
