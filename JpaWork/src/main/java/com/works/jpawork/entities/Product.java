@@ -19,4 +19,5 @@ public class Product {
     private Double price;
     private Integer stock;
     private String detail;
+    private Long uid;
 }

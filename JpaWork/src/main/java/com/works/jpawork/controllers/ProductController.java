@@ -1,13 +1,16 @@
 package com.works.jpawork.controllers;
 
 import com.works.jpawork.entities.Product;
+import com.works.jpawork.entities.User;
 import com.works.jpawork.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -15,16 +18,19 @@ import java.util.List;
 public class ProductController {
 
     final ProductService service ;
+    final HttpServletRequest request;
 
     @GetMapping("/product")
-    public String products(Model model){
-        model.addAttribute("product",service.productList());
-
+    public String products(Model model, @RequestParam(defaultValue = "1") int page){
+        model.addAttribute("product",service.productList(page));
         return "product";
     }
 
     @GetMapping("/addProduct")
     public String addProduct(Product product){
+        User user = (User) request.getSession().getAttribute("user");
+        Long id = user.getUid();
+        product.setUid(id);
         service.saveProduct(product);
         return "redirect:/product";
     }

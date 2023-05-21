@@ -1,6 +1,8 @@
 package com.works.jpawork.repositories;
 
 import com.works.jpawork.entities.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,6 +17,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     void updateProduct(String title, Double price, Integer stock, String detail,Long pid);
 
     List<Product> findByTitleLikeIgnoreCaseOrDetailLikeIgnoreCase(String title, String detail);
+
+    Page<Product> findByUidEquals(Long uid, Pageable pageable);
 
 
 
