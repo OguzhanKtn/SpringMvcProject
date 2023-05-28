@@ -37,14 +37,30 @@ public class ProductService {
 
     public void deleteProduct(String id){
         try{
-            long Id = Long.parseLong(id);
-            productRepository.deleteById(Id);
+            User user = (User) request.getSession().getAttribute("user");
+            Long pid = Long.parseLong(id);
+            Long uid = user.getUid();
+            boolean status = productRepository.existsByPidEqualsAndUidEquals(pid,uid);
+            if(status){
+                productRepository.deleteById(pid);
+            }
         }catch (Exception ex){
             System.err.println(ex.getMessage());
         }
     }
 
     public void updateProduct(Product product){
-        productRepository.updateProduct(product.getTitle(),product.getPrice(),product.getStock(),product.getDetail(),product.getPid());
+        try{
+            User user = (User) request.getSession().getAttribute("user");
+            Long pid = product.getPid();
+            Long uid = user.getUid();
+            boolean status = productRepository.existsByPidEqualsAndUidEquals(pid,uid);
+            if(status){
+                productRepository.updateProduct(product.getTitle(),product.getPrice(),product.getStock(),product.getDetail(),product.getPid());
+            }
+        }catch (Exception ex){
+            System.err.println(ex.getMessage());
+        }
+
     }
 }

@@ -75,7 +75,7 @@
                             <div class="modal-body">
                                 <form action="/updateProduct" method="get">
                                     <div class="mb-3">
-                                        <input th:value="${item.pid}" name="pid" class="form-control" />
+                                        <input readonly th:value="${item.pid}" name="pid" class="form-control" />
                                     </div>
                                     <div class="mb-3">
                                         <input th:value="${item.title}" name="title" class="form-control" />

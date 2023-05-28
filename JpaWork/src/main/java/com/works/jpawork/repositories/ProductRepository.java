@@ -20,6 +20,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Page<Product> findByUidEquals(Long uid, Pageable pageable);
 
+    boolean existsByPidEqualsAndUidEquals(Long pid, Long uid);
+
+
+
 
 
 

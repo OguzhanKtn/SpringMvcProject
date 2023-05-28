@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="tr">
+<html lang="tr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -11,7 +11,14 @@
   <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/">
 </head>
 <body class="text-center">
+
 <div class="container">
+        <th:block th:if="${status > 0}">
+            <div class="alert alert-danger" role="alert">
+            <th:block th:text="${message}"></th:block>
+            </div>
+        </th:block>
+
     <form class="form-signin" method="post" action="/loginUser">
         <img class="mb-4" src="https://cdn-icons-png.flaticon.com/512/2170/2170153.png" alt="" width="72" height="72">
         <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
@@ -28,5 +35,10 @@
         <p class="mt-5 mb-3 text-muted">&copy; İstanbul Eğitim Akademi</p>
     </form>
 </div>
+<script>
+    setTimeout(()=>{
+        document.querySelector(".alert-danger").remove();
+    },3000)
+</script>
 </body>
 </html>

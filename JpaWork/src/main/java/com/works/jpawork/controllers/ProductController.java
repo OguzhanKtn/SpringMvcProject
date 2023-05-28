@@ -21,7 +21,7 @@ public class ProductController {
     final HttpServletRequest request;
 
     @GetMapping("/product")
-    public String products(Model model, @RequestParam(defaultValue = "1") int page){
+    public String products(Model model, @RequestParam(defaultValue = "0") int page){
         model.addAttribute("product",service.productList(page));
         return "product";
     }

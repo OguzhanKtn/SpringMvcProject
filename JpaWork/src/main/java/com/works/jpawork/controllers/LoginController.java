@@ -5,6 +5,7 @@ import com.works.jpawork.services.TinkEncDec;
 import com.works.jpawork.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -24,13 +25,20 @@ public class LoginController {
     final HttpServletRequest request;
     final HttpServletResponse response;
 
+    String message;
+    int status = 0;
+
     @GetMapping("/")
-    public String login(){
+    public String login(Model model){
+        model.addAttribute("message",message);
+        model.addAttribute("status",status);
+        message ="";
+        status = 0;
         return "login";
     }
 
     @PostMapping("/loginUser")
-    public String userLogin(User user) throws NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException {
+    public String userLogin(User user) {
        User u = service.userLogin(user);
        if(u != null) {
            request.getSession().setAttribute("user", u);
@@ -42,6 +50,8 @@ public class LoginController {
            }
            return "redirect:/product";
        }else{
+           message = "You entered incorrectly, please try again.";
+           status = 1;
            return "redirect:/";
        }
     }
