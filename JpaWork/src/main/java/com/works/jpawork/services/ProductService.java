@@ -22,7 +22,7 @@ public class ProductService {
     public Page<Product> productList(int page) {
         User user = (User) request.getSession().getAttribute("user");
         Long uid = user.getUid();
-        Pageable pageable = PageRequest.of(page,2);
+        Pageable pageable = PageRequest.of(page,100);
         Page<Product> productPage = productRepository.findByUidEquals(uid,pageable);
         return productPage;
     }
@@ -31,8 +31,18 @@ public class ProductService {
        return productRepository.save(product);
     }
 
-    public List<Product> searchProduct(String q){
-       return productRepository.findByTitleLikeIgnoreCaseOrDetailLikeIgnoreCase(q,q);
+    public Page<Product> searchProduct(String q, int page){
+        User user = (User) request.getSession().getAttribute("user");
+        Long uid = user.getUid();
+        q = "%"+q+"%";
+        try{
+            Pageable pageable = PageRequest.of(page,50);
+           Page<Product> prd = productRepository.findByTitleLikeIgnoreCaseAndUidEqualsOrDetailLikeIgnoreCaseAndUidEquals(q,uid,q,uid,pageable);
+           return prd;
+        }catch (Exception ex){
+            System.err.println(ex.getMessage());
+        }
+       return null;
     }
 
     public void deleteProduct(String id){

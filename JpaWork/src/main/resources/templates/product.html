@@ -41,11 +41,13 @@
         <tr>
             <th scope="col">No</th>
             <th scope="col">Id</th>
+            <th scope="col">Image</th>
             <th scope="col">Title</th>
             <th scope="col">Detail</th>
             <th scope="col">Price</th>
             <th scope="col">Stock</th>
             <th scope="col">Delete</th>
+            <th scope="col">ImageAdd</th>
             <th scope="col">Update</th>
         </tr>
         </thead>
@@ -53,12 +55,44 @@
         <tr th:each="item,iter :${product}">
             <th scope="row" th:text="${iter.count}"></th>
             <th scope="row" th:text="${item.pid}"></th>
+            <th scope="row">
+                <img th:src="@{${'/getImage/'+ iter.index}}"
+                     class="card img-fluid" style="width:300px" alt=""/>
+            </th>
             <td th:text="${item.title}"></td>
             <td th:text="${item.detail}"></td>
             <td th:text="${item.price}"></td>
             <td th:text="${item.stock}"></td>
             <td>
                 <a th:href="${'/deleteProduct/'+ item.pid}" role="button" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+            <td>
+                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" th:attr="data-bs-target='#imageModal'+${item.pid }">
+                    AddImage
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" th:id="${'imageModal'+item.pid}" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModal" th:text="${item.detail}" ></h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="/imageAdd" enctype="multipart/form-data" method="post">
+                                    <div class="mb-3">
+                                        <input readonly th:value="${item.pid}" name="pid" class="form-control" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="formFile" class="form-label">Image</label>
+                                        <input name="image" accept="image/png, image/jpeg" class="form-control" type="file" id="formFile">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </td>
             <td>
                 <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" th:attr="data-bs-target='#customerModal'+${item.pid }">

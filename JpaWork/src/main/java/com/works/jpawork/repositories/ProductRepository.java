@@ -16,15 +16,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("update Product p set p.title = ?1, p.price = ?2, p.stock = ?3, p.detail = ?4 where p.pid = ?5")
     void updateProduct(String title, Double price, Integer stock, String detail,Long pid);
 
-    List<Product> findByTitleLikeIgnoreCaseOrDetailLikeIgnoreCase(String title, String detail);
+    Page<Product> findByTitleLikeIgnoreCaseAndUidEqualsOrDetailLikeIgnoreCaseAndUidEquals(String title, Long uid, String detail, Long uid1,Pageable pageable);
 
     Page<Product> findByUidEquals(Long uid, Pageable pageable);
 
     boolean existsByPidEqualsAndUidEquals(Long pid, Long uid);
-
-
-
-
-
 
 }
